@@ -1,0 +1,22 @@
+name: Trigger Java Review Action
+
+on:
+  pull_request:
+    paths:
+      - '**/*.java'
+
+jobs:
+  trigger-review:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Trigger Java Review Action
+      uses: octokit/request-action@v2
+      with:
+        route: POST /repos/:owner/:repo/actions/workflows/:workflow_id/dispatches
+        owner: davithss
+        repo: java-review-action
+        workflow_id: review_java.yml
+        ref: ${{ github.event.pull_request.head.ref }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
