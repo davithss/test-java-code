@@ -14,6 +14,7 @@ jobs:
       uses: peter-evans/repository-dispatch@v2
       with:
         GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+        TESTPAT: ${{ secrets.TESTPAT }}
         repository: davithss/java-review-action
         event-type: review-java
         client-payload: '{"ref": "${{ github.event.pull_request.head.ref }}"}'
