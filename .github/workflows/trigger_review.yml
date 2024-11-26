@@ -1,0 +1,19 @@
+name: Trigger Java Review Action
+
+on:
+  pull_request:
+    paths:
+      - '**/*.java'
+
+jobs:
+  trigger-review:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Trigger Java Review Action
+      uses: peter-evans/repository-dispatch@v2
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        repository: your-github-username/java-review-action
+        event-type: review-java
+        client-payload: '{"ref": "${{ github.event.pull_request.head.ref }}"}'
