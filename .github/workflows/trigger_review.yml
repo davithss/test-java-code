@@ -18,4 +18,4 @@ jobs:
         repo: java-review-action
         event_type: review-java
         client_payload: '{"ref": "${{ github.event.pull_request.head.ref }}"}'
-        token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
