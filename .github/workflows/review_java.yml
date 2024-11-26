@@ -1,4 +1,4 @@
-name: Review Java Code
+name: Trigger Java Review Action
 
 on:
   pull_request:
@@ -6,25 +6,24 @@ on:
       - '**/*.java'
 
 jobs:
-  review:
+  trigger-review:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
-
-    - name: Set up Elixir
-      uses: erlef/setup-elixir@v1
+    - name: Trigger Java Review Action
+      uses: actions/github-script@v6
       with:
-        elixir-version: '1.14'
-        otp-version: '25.0'
+        script: |
+          const owner = 'davithss';
+          const repo = 'java-review-action';
+          const workflow_id = 'review_java.yml';
+          const ref = context.payload.pull_request.head.ref;
 
-    - name: Install dependencies
-      run: mix deps.get
-
-    - name: Run Java Review
+          await github.actions.createWorkflowDispatch({
+            owner,
+            repo,
+            workflow_id,
+            ref
+          });
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        AZURE_OPENAI_API_KEY: ${{ secrets.AZURE_OPENAI_API_KEY }}
-        AZURE_OPENAI_ENDPOINT: ${{ secrets.AZURE_OPENAI_ENDPOINT }}
-      run: mix review_java
