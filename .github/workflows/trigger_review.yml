@@ -11,7 +11,8 @@ jobs:
 
     steps:
     - name: Trigger Java Review Action
-      uses: octokit/request-action@v2
+    - uses: octokit/request-action@v2.x
+        id: get_latest_release
       with:
         route: POST /repos/{owner}/{repo}/dispatches
         owner: davithss
