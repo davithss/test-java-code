@@ -11,12 +11,9 @@ jobs:
 
     steps:
     - name: Trigger Java Review Action
-      uses: octokit/request-action@v2
+      uses: peter-evans/repository-dispatch@v2
       with:
-        route: POST /repos/:owner/:repo/actions/workflows/:workflow_id/dispatches
-        owner: davithss
-        repo: java-review-action
-        workflow_id: review_java.yml
-        ref: ${{ github.event.pull_request.head.ref }}
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        token: ${{ secrets.GITHUB_TOKEN }}
+        repository: your-github-username/java-review-action
+        event-type: review-java
+        client-payload: '{"ref": "${{ github.event.pull_request.head.ref }}"}'
